@@ -1,7 +1,7 @@
 version: "3"
 services:
   backdroppr:
-    image: backdroppr:latest
+    image: shinigandhi/backdroppr:latest
     restart: always
     volumes:
       - ./config:/config
