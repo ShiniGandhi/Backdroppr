@@ -1,0 +1,9 @@
+version: "3"
+services:
+  backdroppr:
+    image: backdroppr:latest
+    restart: always
+    volumes:
+      - ./config:/config
+      - /vault/Media/TV Shows:/tv
+      - /vault/Media/Movies:/movies

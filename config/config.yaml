@@ -1,0 +1,16 @@
+### Mandatory ###
+radarr_api: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+radarr_host: "http://172.0.0.1:7878"
+sonarr_api: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+sonarr_host: "http://172.0.0.1:8989"
+tmdb_api: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+### Optional ###
+sleep_time: 3
+filetype: "webm"
+skip_intros: True
+subs: True
+length_range: "30,300"
+output_dirs: "trailers"
+### Uncomment if needed ###
+moviepath: "/vault/Media/Movies"
+tvpath: "/vault/Media/TV Shows"
