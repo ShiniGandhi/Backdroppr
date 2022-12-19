@@ -20,6 +20,7 @@ It won't redownload it though.
 * Vimeo fallback
 * Customizeable filenames
 * Codec selection (as well as hardware acceleration)
+* Option to run the script once, if no sleep time was set.
 
 ## Requirements
 (note: currently only works in Linux)
