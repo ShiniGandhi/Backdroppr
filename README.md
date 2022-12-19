@@ -67,11 +67,11 @@ tvpath: "/vault/Media/TV Shows"
 ```
 | Name | Description | Example | Required |
 | --- | --- | --- | --- |
-| radarr_api | API key received from Radarr | `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx` | Yes |
+| radarr_api | API key received from Radarr | `4556edb99d442d83b88c6809c42fc78d` | Yes |
 | radarr_host | IP and port in-which Radarr runs | `http://172.0.0.1:7878` | Yes |
-| sonarr_api | API key received from Sonarr | `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx` | Yes |
+| sonarr_api | API key received from Sonarr | `01bb1ebca84e8939f112c414b98c70f7` | Yes |
 | sonarr_host | IP and port in-which Sonarr runs | `http://172.0.0.1:8989` | Yes |
-| tmdb_api | [API key from themoviedb](https://developers.themoviedb.org/3/getting-started/introduction) | `xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx` | Yes |
+| tmdb_api | [API key from themoviedb](https://developers.themoviedb.org/3/getting-started/introduction) | `96dd72f9176e688b8967829911a184fb` | Yes |
 | output_dirs | The directory inside the tv show/movie's directory that trailers will be downloaded to. </br>Multiple values can be set using a comma (`,`). | `trailers` or `trailers,backdrops` | Yes
 | sleep_time | Time in hours that the script will wait until running again. </br>Can be set to minutes using a decimal point.</br>Currently required, will be made optional in the next release. | `3` or `0.5` | Yes |
 | length_range | Time range in seconds in which the trailer must be. Separated with a comma `,` </br>Currently required, will be made optional in the next release, but I do recommend setting it, as some entries may have extremely long or short videos. | `30,300` | Yes |
