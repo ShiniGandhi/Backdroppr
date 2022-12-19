@@ -89,5 +89,6 @@ services:
     volumes:
       - ./config:/config #Where the config file will be located
       - /vault/Media/TV Shows:/tv #TV show directory re-routing
-      - /vault/Media/Movies:/movies #Movie directory re-routing```
+      - /vault/Media/Movies:/movies #Movie directory re-routing
+```
 
