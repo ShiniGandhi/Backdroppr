@@ -3,6 +3,7 @@ Backdropper is a tool written in Python that is used to import movies and shows 
 
 ## Features
 * Automatically select the highest resolution available on YouTube (while trying to avoid 360 videos)
+* Download to multiple directories
 * Automatically detect and crop black borders.
 * Fallback to manual search if no trailer exists in TheMovieDB.
 * Video length filtering to avoid short or long videos.
