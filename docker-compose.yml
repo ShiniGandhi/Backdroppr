@@ -4,6 +4,6 @@ services:
     image: shinigandhi/backdroppr:latest
     restart: always
     volumes:
-      - ./config:/config
-      - /vault/Media/TV Shows:/tv
-      - /vault/Media/Movies:/movies
+      - ./config:/config #Where the config file will be located
+      - /vault/Media/TV Shows:/tv #TV show directory re-routing
+      - /vault/Media/Movies:/movies #Movie directory re-routing
