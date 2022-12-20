@@ -43,7 +43,7 @@ This guide assumes you already have Docker (if used), Radarr, and Sonarr install
 ### Docker
 1. Clone the repository: `git clone https://github.com/ShiniGandhi/Backdroppr.git`.
 2. Navigate to the repo's directory: `cd Backdroppr`.
-3. Build the image: `docker build -t shinigandhi/backdroppr:latest .`
+3. Build the image: `docker build -t shinigandhi/backdroppr:latest .` (you can skip if you want to use my image)
 4. [Edit the docker-compose file](###docker-compose.yml).
 5. [Edit the configuration file](###config.yaml).
 6. Start the container `docker-compose up -d`.
