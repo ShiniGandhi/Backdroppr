@@ -185,13 +185,12 @@ def post_process(filename, cropvalue, item_path, bitrate):
             os.mkdir(f'{item_path}/{config["output_dirs"].split(",")[0]}')
         except:
             logging.debug("Output directory found.")
+        sub_file = ""
         if config['filetype'] == "webm":
             if config['subs']:
                 if f"{filename}.en.vtt" in os.listdir("cache/"):
                     logging.info("Subs found")
                     sub_file = f"-i \"cache/{filename}.en.vtt\" -map 0:v -map 0:a -map 1 -metadata:s:s:0 language=eng"
-                else:
-                    sub_file = ""
             subprocess.check_call(
                 f'ffmpeg -i "{filename}" {sub_file} -threads 16 -vf {cropvalue} -c:v libvpx-vp9 -crf {bitrate} -b:v '
                 f'4500k -af "volume=-5dB" -y "{item_path}/{config["output_dirs"].split(",")[0]}/video1.webm"',
@@ -202,8 +201,6 @@ def post_process(filename, cropvalue, item_path, bitrate):
                     logging.info("Subs found")
                     sub_file = f"-i \"cache/{filename}.en.vtt\" -map 0:v -map 0:a -map 1 -metadata:s:s:0 language=eng " \
                                f"-disposition:s:0 forced -c:s ssa "
-                else:
-                    sub_file = ""
             subprocess.check_call(f'ffmpeg -i "{filename}" {sub_file} -threads 16 -vf {cropvalue} -c:v libx264 -b:v {bitrate*140}'
                                   f'-maxrate {bitrate*140} -bufsize 2M -preset slow -c:a aac -af "volume=-7dB" '
                                   f'-y "{item_path}/{config["output_dirs"].split(",")[0]}/video1.mp4"',
