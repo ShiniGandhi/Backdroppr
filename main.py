@@ -145,16 +145,17 @@ def show_finder():
 def trailer_download(link, item):
     ytdl_opts = {
         'progress_hooks': [dl_progress],
-        'match_filter': check_duration,
         'format': 'bestvideo+bestaudio',
         'outtmpl': f'cache/{item["sortTitle"]}'
     }
-    if config['skip_intros']:
-        ytdl_opts.update({'postprocessors': [
-            {'key': 'SponsorBlock'},
-            {'key': 'ModifyChapters',
-             'remove_sponsor_segments': ['sponsor', 'intro', 'outro', 'selfpromo', 'preview', 'filler', 'interaction']}
-        ]})
+    try:
+        ytdl_opts.update({'match_filter': check_duration}) if 'length_range' in config else None
+    except:
+        pass
+    try:
+        ytdl_opts.update({'postprocessors': [{'key': 'SponsorBlock'}, {'key': 'ModifyChapters', 'remove_sponsor_segments': ['sponsor', 'intro', 'outro', 'selfpromo', 'preview', 'filler', 'interaction']}]}) if config['skip_intros'] else None
+    except:
+        pass
     fileout = glob(f'cache/{item["sortTitle"]}.*')
     os.remove(fileout[0]) if len(fileout) > 1 else None
     try:
@@ -192,7 +193,7 @@ def post_process(filename, cropvalue, item_path, bitrate):
                     logging.info("Subs found")
                     sub_file = f"-i \"cache/{filename}.en.vtt\" -map 0:v -map 0:a -map 1 -metadata:s:s:0 language=eng"
             subprocess.check_call(
-                f'ffmpeg -i "{filename}" {sub_file} -threads 16 -vf {cropvalue} -c:v libvpx-vp9 -crf {bitrate} -b:v '
+                f'ffmpeg -i "{filename}" {sub_file} -threads {thread_count} -vf {cropvalue} -c:v libvpx-vp9 -crf {bitrate} -b:v '
                 f'4500k -af "volume=-5dB" -y "{item_path}/{config["output_dirs"].split(",")[0]}/video1.webm"',
                                         shell=True)
         else:
@@ -201,7 +202,7 @@ def post_process(filename, cropvalue, item_path, bitrate):
                     logging.info("Subs found")
                     sub_file = f"-i \"cache/{filename}.en.vtt\" -map 0:v -map 0:a -map 1 -metadata:s:s:0 language=eng " \
                                f"-disposition:s:0 forced -c:s ssa "
-            subprocess.check_call(f'ffmpeg -i "{filename}" {sub_file} -threads 16 -vf {cropvalue} -c:v libx264 -b:v {bitrate*140}'
+            subprocess.check_call(f'ffmpeg -i "{filename}" {sub_file} -threads {thread_count} -vf {cropvalue} -c:v libx264 -b:v {bitrate*140}'
                                   f'-maxrate {bitrate*140} -bufsize 2M -preset slow -c:a aac -af "volume=-7dB" '
                                   f'-y "{item_path}/{config["output_dirs"].split(",")[0]}/video1.mp4"',
                                         shell=True)
@@ -217,13 +218,19 @@ except:
     logging.debug("Cache directory found.")
 while True:
     load_config()
+    thread_count = config['thread_count'] if 'thread_count' in config else 0
     sonarr = SonarrAPI(config['sonarr_host'], config['sonarr_api'])
     radarr = RadarrAPI(config['radarr_host'], config['radarr_api'])
     movie_finder()
     show_finder()
-    if isinstance(config['sleep_time'], int):
-        logging.info(f"Operation complete. Clearing temporary files and sleeping for {config['sleep_time']} hour(s).")
-    else:
-        logging.info(f"Operation complete. Clearing temporary files and sleeping for {config['sleep_time'] * 60} minute(s).")
     for f in os.listdir("cache/"): os.remove(f"cache/{f}")
-    sleep(float(config['sleep_time']) * 3600)
+    if 'sleep_time' in config:
+        if isinstance(config['sleep_time'], int):
+            logging.info(
+                f"Operation complete. Clearing temporary files and sleeping for {config['sleep_time']} hour(s).")
+        else:
+            logging.info(
+                f"Operation complete. Clearing temporary files and sleeping for {config['sleep_time'] * 60} minute(s).")
+        sleep(float(config['sleep_time']) * 3600)
+    else:
+        exit(logging.info("Operation complete. No sleep time was set, stopping."))

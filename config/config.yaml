@@ -5,11 +5,12 @@ sonarr_api: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 sonarr_host: "http://172.0.0.1:8989"
 tmdb_api: "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 output_dirs: "trailers"
-sleep_time: 3
-length_range: "30,300"
 ### Optional ###
 filetype: "webm"
+sleep_time: 3
+length_range: "30,300"
 skip_intros: True
+thread_count: 8
 subs: True
 ### Uncomment if needed ###
 moviepath: "/vault/Media/Movies"

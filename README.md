@@ -9,6 +9,7 @@ Backdropper is a tool written in Python that is used to import movies and shows 
 * Video length filtering to avoid short or long videos.
 * Automatic subtitle download.
 * Automatic intro, outro and intermission skipping in trailers.
+* Option to run the script once, if no sleep time was set.
 
 ## Known Bugs
 * If no trailer was found on TheMovieDB, the script will manually search for one, but will keep searching again even if it already found and downloaded one.
@@ -21,7 +22,6 @@ It won't redownload it though.
 * Customizeable filenames.
 * Codec selection (as well as hardware acceleration).
 * Customizeable bitrates.
-* Option to run the script once, if no sleep time was set.
 
 ## Requirements
 (note: currently only works in Linux)
@@ -62,36 +62,37 @@ length_range: "30,300"
 ### Optional ###
 filetype: "webm"
 skip_intros: True
+thread_count: 8
 subs: True
 ### Uncomment if needed ###
 moviepath: "/vault/Media/Movies"
 tvpath: "/vault/Media/TV Shows"
 ```
-| Name | Description | Example | Required |
-| --- | --- | --- | --- |
-| radarr_api | API key received from Radarr | `4556edb99d442d83b88c6809c42fc78d` | Yes |
-| radarr_host | IP and port in-which Radarr runs | `http://172.0.0.1:7878` | Yes |
-| sonarr_api | API key received from Sonarr | `01bb1ebca84e8939f112c414b98c70f7` | Yes |
-| sonarr_host | IP and port in-which Sonarr runs | `http://172.0.0.1:8989` | Yes |
-| tmdb_api | [API key from themoviedb](https://developers.themoviedb.org/3/getting-started/introduction) | `96dd72f9176e688b8967829911a184fb` | Yes |
-| output_dirs | The directory inside the tv show/movie's directory that trailers will be downloaded to. </br>Multiple values can be set using a comma (`,`). | `trailers` or `trailers,backdrops` | Yes
-| sleep_time | Time in hours that the script will wait until running again. </br>Can be set to minutes using a decimal point.</br>Currently required, will be made optional in the next release. | `3` or `0.5` | Yes |
-| length_range | Time range in seconds in which the trailer must be. Separated with a comma `,` </br>Currently required, will be made optional in the next release, but I do recommend setting it, as some entries may have extremely long or short videos. | `30,300` | Yes |
-| filetype | File extension used in target file. </br>Defaults to `mp4` (`h264`) if left empty. </br>I recommend using `webm` since it uses `vp9`, which, while slower to encode is more efficient. | `webm` - `vp9` codec </br> `mp4` - `h264` codec | No |
-| skip_intros | Uses SponsorBlock to detect intros and other junk in the video and skips it. </br>Doesn't always work. If you're experiencing any issues just disable it for a while. </br>Defaults to `False` if not set. | `True` or `Falase` | No |
-| subs | Whether or not subtitles will be downloaded </br>`vtt` if `webm` and `ass` if `mp4`. </br>Defaults to `False` if not set. | `True` or `Falase` | No |
-| moviepath | Override the path set inside Radarr if not the same as the script's </br>Useful if Radarr is running inside a container or on a different machine. | `"/vault/Media/Movies"` | No |
-| tvpath | Override the path set inside Sonarr if not the same as the script's </br>Useful if Sonarr is running inside a container or on a different machine. | `"/vault/Media/TV Shows"` | No |
+| Name | Description                                                                                                                                                                                                                                | Example | Required |
+| --- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| --- | --- |
+| radarr_api | API key received from Radarr                                                                                                                                                                                                               | `4556edb99d442d83b88c6809c42fc78d` | Yes |
+| radarr_host | IP and port in-which Radarr runs                                                                                                                                                                                                           | `http://172.0.0.1:7878` | Yes |
+| sonarr_api | API key received from Sonarr                                                                                                                                                                                                               | `01bb1ebca84e8939f112c414b98c70f7` | Yes |
+| sonarr_host | IP and port in-which Sonarr runs                                                                                                                                                                                                           | `http://172.0.0.1:8989` | Yes |
+| tmdb_api | [API key from themoviedb](https://developers.themoviedb.org/3/getting-started/introduction)                                                                                                                                                | `96dd72f9176e688b8967829911a184fb` | Yes |
+| output_dirs | The directory inside the tv show/movie's directory that trailers will be downloaded to. </br>Multiple values can be set using a comma (`,`).                                                                                               | `trailers` or `trailers,backdrops` | Yes
+| sleep_time | Time in hours that the script will wait until running again. </br>Can be set to minutes using a decimal point.</br>If not set, the script will only run once (but make sure you disable `restart: always` if you do this.                  | `3` or `0.5` | No |
+| length_range | Time range in seconds in which the trailer must be. Separated with a comma `,` </br>Optional, but I do recommend setting it, as some entries may have extremely long or short videos. | `30,300` | No |
+| filetype | File extension used in target file. </br>Defaults to `mp4` (`h264`) if left empty. </br>I recommend using `webm` since it uses `vp9`, which, while slower to encode is more efficient.                                                     | `webm` - `vp9` codec </br> `mp4` - `h264` codec | No |
+| skip_intros | Uses SponsorBlock to detect intros and other junk in the video and skips it. </br>Doesn't always work. If you're experiencing any issues just disable it for a while. </br>Defaults to `False` if not set.                                 | `True` or `Falase` | No |
+| thread_count | Number of threads to use when transcoding. Set to all threads if not set. | `8` | No |
+| subs | Whether or not subtitles will be downloaded </br>`vtt` if `webm` and `ass` if `mp4`. </br>Defaults to `False` if not set.                                                                                                                  | `True` or `Falase` | No |
+| moviepath | Override the path set inside Radarr if not the same as the script's </br>Useful if Radarr is running inside a container or on a different machine.                                                                                         | `"/vault/Media/Movies"` | No |
+| tvpath | Override the path set inside Sonarr if not the same as the script's </br>Useful if Sonarr is running inside a container or on a different machine.                                                                                         | `"/vault/Media/TV Shows"` | No |
 
 ### docker-compose.yml
 ```version: "3"
 services:
   backdroppr:
     image: shinigandhi/backdroppr:latest
-    restart: always
+    restart: always #Disable this if you're only running the script once
     volumes:
       - ./config:/config #Where the config file will be located
       - /vault/Media/TV Shows:/tv #TV show directory re-routing
       - /vault/Media/Movies:/movies #Movie directory re-routing
 ```
-
