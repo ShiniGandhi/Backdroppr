@@ -12,8 +12,7 @@ Backdropper is a tool written in Python that is used to import movies and shows 
 * Option to run the script once, if no sleep time was set.
 
 ## Known Bugs
-* If no trailer was found on TheMovieDB, the script will manually search for one, but will keep searching again even if it already found and downloaded one.
-It won't redownload it though.
+* If no trailer was found on TheMovieDB, the script will manually search for one, but will keep searching again even if it already found and downloaded one. It won't redownload it though.
 * Issue when a video with 5.1 audio is found.
 * Skips the rest of the trailers in TheMovieDB if a link is dead.
 
@@ -70,10 +69,10 @@ tvpath: "/vault/Media/TV Shows"
 ```
 | Name | Description                                                                                                                                                                                                                                | Example | Required |
 | --- |--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------| --- | --- |
-| radarr_api | API key received from Radarr                                                                                                                                                                                                               | `4556edb99d442d83b88c6809c42fc78d` | Yes |
-| radarr_host | IP and port in-which Radarr runs                                                                                                                                                                                                           | `http://172.0.0.1:7878` | Yes |
-| sonarr_api | API key received from Sonarr                                                                                                                                                                                                               | `01bb1ebca84e8939f112c414b98c70f7` | Yes |
-| sonarr_host | IP and port in-which Sonarr runs                                                                                                                                                                                                           | `http://172.0.0.1:8989` | Yes |
+| radarr_api | API key received from Radarr<br>**if not set:** disables Radarr.                                                                                                                                                                                                               | `4556edb99d442d83b88c6809c42fc78d` | Yes |
+| radarr_host | IP and port in-which Radarr runs<br>**if not set:** disables Radarr.                                                                                                                                                                                                           | `http://172.0.0.1:7878` | Yes |
+| sonarr_api | API key received from Sonarr<br>**if not set:** disables Sonarr.                                                                                                                                                                                                               | `01bb1ebca84e8939f112c414b98c70f7` | Yes |
+| sonarr_host | IP and port in-which Sonarr runs<br>**if not set:** disables Sonarr.                                                                                                                                                                                                           | `http://172.0.0.1:8989` | Yes |
 | tmdb_api | [API key from themoviedb](https://developers.themoviedb.org/3/getting-started/introduction)                                                                                                                                                | `96dd72f9176e688b8967829911a184fb` | Yes |
 | output_dirs | The directory inside the tv show/movie's directory that trailers will be downloaded to. </br>Multiple values can be set using a comma (`,`).                                                                                               | `trailers` or `trailers,backdrops` | Yes
 | sleep_time | Time in hours that the script will wait until running again. </br>Can be set to minutes using a decimal point.</br>If not set, the script will only run once (but make sure you disable `restart: always` if you do this.                  | `3` or `0.5` | No |
