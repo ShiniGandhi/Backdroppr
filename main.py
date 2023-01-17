@@ -41,7 +41,11 @@ def trailer_pull(tmdb_id, item_type):
 def movie_finder():
     logging.info("Movie trailer finder started.")
     movie_num = 0
-    movie_json = radarr.get_movie()
+    try:
+        movie_json = radarr.get_movie()
+    except Exception as e:
+        logging.error(f"Can't communicate with Radarr! {e}")
+        exit(1)
     for movie_item in movie_json:
         if movie_item['hasFile']:
             movie_num = movie_num + 1
@@ -88,7 +92,11 @@ def movie_finder():
 def show_finder():
     logging.info("Show trailer finder started.")
     tv_num = 0
-    shows_json = sonarr.get_series()
+    try:
+        shows_json = sonarr.get_series()
+    except Exception as e:
+        logging.error(f"Can't communicate with Sonarr! {e}")
+        exit(1)
     for show_item in shows_json:
         try:
             if 'tvpath' in config:
@@ -219,10 +227,16 @@ except:
 while True:
     load_config()
     thread_count = config['thread_count'] if 'thread_count' in config else 0
-    sonarr = SonarrAPI(config['sonarr_host'], config['sonarr_api'])
-    radarr = RadarrAPI(config['radarr_host'], config['radarr_api'])
-    movie_finder()
-    show_finder()
+    if all(x in config for x in ['radarr_host', 'radarr_api']):
+        radarr = RadarrAPI(config['radarr_host'], config['radarr_api'])
+        movie_finder()
+    else:
+        logging.info("No Radarr API key/host were found, skipping...")
+    if all(x in config for x in ['sonarr_host', 'sonarr_api']):
+        sonarr = SonarrAPI(config['sonarr_host'], config['sonarr_api'])
+        show_finder()
+    else:
+        logging.info("No Sonarr API key/host were found, skipping...")
     for f in os.listdir("cache/"): os.remove(f"cache/{f}")
     if 'sleep_time' in config:
         if isinstance(config['sleep_time'], int):
