@@ -1,7 +1,25 @@
 version: "3"
 services:
   backdroppr:
+    container_name: backdroppr
     image: shinigandhi/backdroppr:latest
+    environment:
+      # required in config.yaml
+      - radarr_api=radarr_api_token
+      - radarr_host=http://localhost:7878
+      - sonarr_api=sonarr_api_token
+      - sonarr_host=http://localhost:8989
+      - tmdb_api="tmdb_token"
+      - output_dirs=trailers
+      # not required in config.yaml
+      - sleep_time=3
+      - length_range=30,300
+      - filetype=webm
+      - skip_intros=True
+      - thread_count=8
+      - subs=False
+      - moviepath="/vault/Media/Movies"
+      - tvpath="/vault/Media/TV Shows"
     restart: always
     volumes:
       - ./config:/config #Where the config file will be located

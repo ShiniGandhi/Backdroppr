@@ -14,6 +14,20 @@ def load_config():
     with open('config/config.yaml', 'r') as f:
         global config
         config = yaml.load(f, Loader=yaml.Loader)
+        config['radarr_api'] = os.environ.get("RADARR_API", config['radarr_api'])
+        config['radarr_host'] = os.environ.get("RADARR_HOST", config['radarr_host'])
+        config['sonarr_api'] = os.environ.get("SONARR_API", config['sonarr_api'])
+        config['sonarr_host'] = os.environ.get("SONARR_HOST", config['sonarr_host'])
+        config['tmdb_api'] = os.environ.get("TMDB_API", config['tmdb_api'])
+        config['output_dirs'] = os.environ.get("OUTPUT_DIRS", config['output_dirs'])
+        config['sleep_time'] = os.environ.get("SLEEP_TIME", config['sleep_time'])
+        config['length_range'] = os.environ.get("LENGTH_RANGE", config['length_range'])
+        config['filetype'] = os.environ.get("FILETYPE", config['filetype'])
+        config['skip_intros'] = os.environ.get("SKIP_INTROS", config['skip_intros'])
+        config['thread_count'] = os.environ.get("THREAD_COUNT", config['thread_count'])
+        config['subs'] = os.environ.get("SUBS", config['subs'])
+        config['moviepath'] = os.environ.get("MOVIEPATH", config['moviepath'])
+        config['tvpath'] = os.environ.get("TVPATH", config['tvpath'])
 
 
 def dl_progress(d):
