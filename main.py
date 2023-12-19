@@ -16,7 +16,7 @@ def load_config():
         with open('config/config.yaml', 'r') as f:
             config = yaml.load(f, Loader=yaml.Loader)
     except FileNotFoundError as e:
-        # when not using local config, load with env
+        # try to load with env variables instead
         config = {}
         number_unset = 0
         number_of_possible_arg = 14
@@ -57,7 +57,7 @@ def load_config():
 
 
 def load_env():
-    # mandatory fields
+    # required fields
     if 'radarr_api' in config and os.environ['RADARR_API'] != 'UNSET_VALUE':
         config['radarr_api'] = os.environ.get("RADARR_API", config['radarr_api'])
     if 'radarr_host' in config and os.environ['RADARR_HOST'] != 'UNSET_VALUE':
