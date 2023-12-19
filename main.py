@@ -11,9 +11,9 @@ from pyarr import SonarrAPI, RadarrAPI
 
 
 def load_config():
+    global config
     try:
         with open('config/config.yaml', 'r') as f:
-            global config
             config = yaml.load(f, Loader=yaml.Loader)
     except Exception as e:
         # when not using local config, load with env
