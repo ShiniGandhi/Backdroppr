@@ -11,9 +11,48 @@ from pyarr import SonarrAPI, RadarrAPI
 
 
 def load_config():
-    with open('config/config.yaml', 'r') as f:
-        global config
-        config = yaml.load(f, Loader=yaml.Loader)
+    try:
+        with open('config/config.yaml', 'r') as f:
+            global config
+            config = yaml.load(f, Loader=yaml.Loader)
+    except Exception as e:
+        # when not using local config, load with env
+        number_unset = 0
+        number_of_possible_arg = 14
+        for key, value in os.environ.items():
+            if value == "UNSET_VALUE":
+                number_unset = number_unset + 1
+        if number_unset != number_of_possible_arg:
+            if os.environ['RADARR_API'] != 'UNSET_VALUE':
+                config['radarr_api'] = os.environ["RADARR_API"]
+            if os.environ['RADARR_HOST'] != 'UNSET_VALUE':
+                config['radarr_host'] = os.environ["RADARR_HOST"]
+            if os.environ['SONARR_API'] != 'UNSET_VALUE':
+                config['sonarr_api'] = os.environ["SONARR_API"]
+            if os.environ['SONARR_HOST'] != 'UNSET_VALUE':
+                config['sonarr_host'] = os.environ["SONARR_HOST"]
+            if os.environ['TMDB_API'] != 'UNSET_VALUE':
+                config['tmdb_api'] = os.environ["TMDB_API"]
+            if os.environ['OUTPUT_DIRS'] != 'UNSET_VALUE':
+                config['output_dirs'] = os.environ["OUTPUT_DIRS"]
+            if os.environ['SLEEP_TIME'] != 'UNSET_VALUE':
+                config['sleep_time'] = os.environ["SLEEP_TIME"]
+            if os.environ['LENGTH_RANGE'] != 'UNSET_VALUE':
+                config['length_range'] = os.environ["LENGTH_RANGE"]
+            if os.environ['FILETYPE'] != 'UNSET_VALUE':
+                config['filetype'] = os.environ["FILETYPE"]
+            if os.environ['SKIP_INTROS'] != 'UNSET_VALUE':
+                config['skip_intros'] = os.environ["SKIP_INTROS"]
+            if os.environ['THREAD_COUNT'] != 'UNSET_VALUE':
+                config['thread_count'] = os.environ["THREAD_COUNT"]
+            if os.environ['SUBS'] != 'UNSET_VALUE':
+                config['subs'] = os.environ["SUBS"]
+            if os.environ['MOVIEPATH'] != 'UNSET_VALUE':
+                config['moviepath'] = os.environ["MOVIEPATH"]
+            if os.environ['TVPATH'] != 'UNSET_VALUE':
+                config['tvpath'] = os.environ["TVPATH"]
+        else:
+            logging.error(f"ERROR: {e}")
 
 
 def load_env():
