@@ -18,34 +18,34 @@ def load_config():
 
 def load_env():
     # mandatory fields
-    if 'radarr_api' in config:
+    if 'radarr_api' in config and config['radarr_api'] is not 'unset!':
         config['radarr_api'] = os.environ.get("RADARR_API", config['radarr_api'])
-    if 'radarr_host' in config:
+    if 'radarr_host' in config and config['radarr_host'] is not 'unset!':
         config['radarr_host'] = os.environ.get("RADARR_HOST", config['radarr_host'])
-    if 'sonarr_api' in config:
+    if 'sonarr_api' in config and config['sonarr_api'] is not 'unset!':
         config['sonarr_api'] = os.environ.get("SONARR_API", config['sonarr_api'])
-    if 'sonarr_host' in config:
+    if 'sonarr_host' in config and config['sonarr_host'] is not 'unset!':
         config['sonarr_host'] = os.environ.get("SONARR_HOST", config['sonarr_host'])
-    if 'tmdb_api' in config:
+    if 'tmdb_api' in config and config['tmdb_api'] is not 'unset!':
         config['tmdb_api'] = os.environ.get("TMDB_API", config['tmdb_api'])
-    if 'output_dirs' in config:
+    if 'output_dirs' in config and config['output_dirs'] is not 'unset!':
         config['output_dirs'] = os.environ.get("OUTPUT_DIRS", config['output_dirs'])
     # optional fields
-    if 'sleep_time' in config:
+    if 'sleep_time' in config and config['sleep_time'] is not 'unset!':
         config['sleep_time'] = os.environ.get("SLEEP_TIME", config['sleep_time'])
-    if 'length_range' in config:
+    if 'length_range' in config and config['length_range'] is not 'unset!':
         config['length_range'] = os.environ.get("LENGTH_RANGE", config['length_range'])
-    if 'filetype' in config:
+    if 'filetype' in config and config['filetype'] is not 'unset!':
         config['filetype'] = os.environ.get("FILETYPE", config['filetype'])
-    if 'skip_intros' in config:
+    if 'skip_intros' in config and config['skip_intros'] is not 'unset!':
         config['skip_intros'] = os.environ.get("SKIP_INTROS", config['skip_intros'])
-    if 'thread_count' in config:
+    if 'thread_count' in config and config['thread_count'] is not 'unset!':
         config['thread_count'] = os.environ.get("THREAD_COUNT", config['thread_count'])
-    if 'subs' in config:
+    if 'subs' in config and config['subs'] is not 'unset!':
         config['subs'] = os.environ.get("SUBS", config['subs'])
-    if 'moviepath' in config:
+    if 'moviepath' in config and config['moviepath'] is not 'unset!':
         config['moviepath'] = os.environ.get("MOVIEPATH", config['moviepath'])
-    if 'tvpath' in config:
+    if 'tvpath' in config and config['tvpath'] is not 'unset!':
         config['tvpath'] = os.environ.get("TVPATH", config['tvpath'])
 
 
