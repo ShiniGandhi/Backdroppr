@@ -11,12 +11,14 @@ from pyarr import SonarrAPI, RadarrAPI
 
 
 def load_config():
-    global config
     try:
         with open('config/config.yaml', 'r') as f:
+            global config
             config = yaml.load(f, Loader=yaml.Loader)
     except FileNotFoundError as e:
         # when not using local config, load with env
+        global config
+        config = {}
         number_unset = 0
         number_of_possible_arg = 14
         for key, value in os.environ.items():
