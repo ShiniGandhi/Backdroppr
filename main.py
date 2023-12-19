@@ -15,7 +15,7 @@ def load_config():
     try:
         with open('config/config.yaml', 'r') as f:
             config = yaml.load(f, Loader=yaml.Loader)
-    except Exception as e:
+    except FileNotFoundError as e:
         # when not using local config, load with env
         number_unset = 0
         number_of_possible_arg = 14
