@@ -18,34 +18,34 @@ def load_config():
 
 def load_env():
     # mandatory fields
-    if 'radarr_api' in config and os.environ['RADARR_API'] != 'VALUE NOT SET':
+    if 'radarr_api' in config and os.environ['RADARR_API'] != 'UNSET_VALUE':
         config['radarr_api'] = os.environ.get("RADARR_API", config['radarr_api'])
-    if 'radarr_host' in config and os.environ['RADARR_HOST'] != 'VALUE NOT SET':
+    if 'radarr_host' in config and os.environ['RADARR_HOST'] != 'UNSET_VALUE':
         config['radarr_host'] = os.environ.get("RADARR_HOST", config['radarr_host'])
-    if 'sonarr_api' in config and os.environ['SONARR_API'] != 'VALUE NOT SET':
+    if 'sonarr_api' in config and os.environ['SONARR_API'] != 'UNSET_VALUE':
         config['sonarr_api'] = os.environ.get("SONARR_API", config['sonarr_api'])
-    if 'sonarr_host' in config and os.environ['SONARR_HOST'] != 'VALUE NOT SET':
+    if 'sonarr_host' in config and os.environ['SONARR_HOST'] != 'UNSET_VALUE':
         config['sonarr_host'] = os.environ.get("SONARR_HOST", config['sonarr_host'])
-    if 'tmdb_api' in config and os.environ['TMDB_API'] != 'VALUE NOT SET':
+    if 'tmdb_api' in config and os.environ['TMDB_API'] != 'UNSET_VALUE':
         config['tmdb_api'] = os.environ.get("TMDB_API", config['tmdb_api'])
-    if 'output_dirs' in config and os.environ['OUTPUT_DIRS'] != 'VALUE NOT SET':
+    if 'output_dirs' in config and os.environ['OUTPUT_DIRS'] != 'UNSET_VALUE':
         config['output_dirs'] = os.environ.get("OUTPUT_DIRS", config['output_dirs'])
     # optional fields
-    if 'sleep_time' in config and os.environ['SLEEP_TIME'] != 'VALUE NOT SET':
+    if 'sleep_time' in config and os.environ['SLEEP_TIME'] != 'UNSET_VALUE':
         config['sleep_time'] = os.environ.get("SLEEP_TIME", config['sleep_time'])
-    if 'length_range' in config and os.environ['LENGTH_RANGE'] != 'VALUE NOT SET':
+    if 'length_range' in config and os.environ['LENGTH_RANGE'] != 'UNSET_VALUE':
         config['length_range'] = os.environ.get("LENGTH_RANGE", config['length_range'])
-    if 'filetype' in config and os.environ['FILETYPE'] != 'VALUE NOT SET':
+    if 'filetype' in config and os.environ['FILETYPE'] != 'UNSET_VALUE':
         config['filetype'] = os.environ.get("FILETYPE", config['filetype'])
-    if 'skip_intros' in config and os.environ['SKIP_INTROS'] != 'VALUE NOT SET':
+    if 'skip_intros' in config and os.environ['SKIP_INTROS'] != 'UNSET_VALUE':
         config['skip_intros'] = os.environ.get("SKIP_INTROS", config['skip_intros'])
-    if 'thread_count' in config and os.environ['THREAD_COUNT'] != 'VALUE NOT SET':
+    if 'thread_count' in config and os.environ['THREAD_COUNT'] != 'UNSET_VALUE':
         config['thread_count'] = os.environ.get("THREAD_COUNT", config['thread_count'])
-    if 'subs' in config and os.environ['SUBS'] != 'VALUE NOT SET':
+    if 'subs' in config and os.environ['SUBS'] != 'UNSET_VALUE':
         config['subs'] = os.environ.get("SUBS", config['subs'])
-    if 'moviepath' in config and os.environ['MOVIEPATH'] != 'VALUE NOT SET':
+    if 'moviepath' in config and os.environ['MOVIEPATH'] != 'UNSET_VALUE':
         config['moviepath'] = os.environ.get("MOVIEPATH", config['moviepath'])
-    if 'tvpath' in config and os.environ['TVPATH'] != 'VALUE NOT SET':
+    if 'tvpath' in config and os.environ['TVPATH'] != 'UNSET_VALUE':
         config['tvpath'] = os.environ.get("TVPATH", config['tvpath'])
 
 
