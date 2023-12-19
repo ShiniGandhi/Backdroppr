@@ -18,34 +18,34 @@ def load_config():
 
 def load_env():
     # mandatory fields
-    if 'radarr_api' in config and config['radarr_api'] is not 'unset!':
+    if 'radarr_api' in config and config['radarr_api'] is not 'VALUEUNSET':
         config['radarr_api'] = os.environ.get("RADARR_API", config['radarr_api'])
-    if 'radarr_host' in config and config['radarr_host'] is not 'unset!':
+    if 'radarr_host' in config and config['radarr_host'] is not 'VALUEUNSET':
         config['radarr_host'] = os.environ.get("RADARR_HOST", config['radarr_host'])
-    if 'sonarr_api' in config and config['sonarr_api'] is not 'unset!':
+    if 'sonarr_api' in config and config['sonarr_api'] is not 'VALUEUNSET':
         config['sonarr_api'] = os.environ.get("SONARR_API", config['sonarr_api'])
-    if 'sonarr_host' in config and config['sonarr_host'] is not 'unset!':
+    if 'sonarr_host' in config and config['sonarr_host'] is not 'VALUEUNSET':
         config['sonarr_host'] = os.environ.get("SONARR_HOST", config['sonarr_host'])
-    if 'tmdb_api' in config and config['tmdb_api'] is not 'unset!':
+    if 'tmdb_api' in config and config['tmdb_api'] is not 'VALUEUNSET':
         config['tmdb_api'] = os.environ.get("TMDB_API", config['tmdb_api'])
-    if 'output_dirs' in config and config['output_dirs'] is not 'unset!':
+    if 'output_dirs' in config and config['output_dirs'] is not 'VALUEUNSET':
         config['output_dirs'] = os.environ.get("OUTPUT_DIRS", config['output_dirs'])
     # optional fields
-    if 'sleep_time' in config and config['sleep_time'] is not 'unset!':
+    if 'sleep_time' in config and config['sleep_time'] is not 'VALUEUNSET':
         config['sleep_time'] = os.environ.get("SLEEP_TIME", config['sleep_time'])
-    if 'length_range' in config and config['length_range'] is not 'unset!':
+    if 'length_range' in config and config['length_range'] is not 'VALUEUNSET':
         config['length_range'] = os.environ.get("LENGTH_RANGE", config['length_range'])
-    if 'filetype' in config and config['filetype'] is not 'unset!':
+    if 'filetype' in config and config['filetype'] is not 'VALUEUNSET':
         config['filetype'] = os.environ.get("FILETYPE", config['filetype'])
-    if 'skip_intros' in config and config['skip_intros'] is not 'unset!':
+    if 'skip_intros' in config and config['skip_intros'] is not 'VALUEUNSET':
         config['skip_intros'] = os.environ.get("SKIP_INTROS", config['skip_intros'])
-    if 'thread_count' in config and config['thread_count'] is not 'unset!':
+    if 'thread_count' in config and config['thread_count'] is not 'VALUEUNSET':
         config['thread_count'] = os.environ.get("THREAD_COUNT", config['thread_count'])
-    if 'subs' in config and config['subs'] is not 'unset!':
+    if 'subs' in config and config['subs'] is not 'VALUEUNSET':
         config['subs'] = os.environ.get("SUBS", config['subs'])
-    if 'moviepath' in config and config['moviepath'] is not 'unset!':
+    if 'moviepath' in config and config['moviepath'] is not 'VALUEUNSET':
         config['moviepath'] = os.environ.get("MOVIEPATH", config['moviepath'])
-    if 'tvpath' in config and config['tvpath'] is not 'unset!':
+    if 'tvpath' in config and config['tvpath'] is not 'VALUEUNSET':
         config['tvpath'] = os.environ.get("TVPATH", config['tvpath'])
 
 
