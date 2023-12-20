@@ -87,7 +87,13 @@ def load_env():
         config['moviepath'] = os.environ.get("MOVIEPATH", config['moviepath'])
     if 'tvpath' in config and os.environ['TVPATH'] != 'UNSET_VALUE':
         config['tvpath'] = os.environ.get("TVPATH", config['tvpath'])
-
+    # transformations
+    if '.' in config['sleep_time']:
+        config['sleep_time'] = float(config['sleep_time'])
+    else:
+        config['sleep_time'] = int(config['sleep_time'])
+    if os.environ['DEBUG'] == 'True':
+        print(config)
 
 def dl_progress(d):
     if d['status'] == 'finished':

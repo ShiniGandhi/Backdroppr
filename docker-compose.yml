@@ -17,9 +17,11 @@ services:
     #   - SKIP_INTROS=True
     #   - THREAD_COUNT="8"
     #   - SUBS=True
-      ### Uncomment if needed ###
-      # - MOVIEPATH="/vault/Media/Movies"
-      # - TVPATH="/vault/Media/TV Shows"
+    ### Uncomment if needed ###
+    #   - MOVIEPATH="/vault/Media/Movies"
+    #   - TVPATH="/vault/Media/TV Shows"
+    ### Debugging ###
+    #     DEBUG=False
     restart: always
     volumes:
       - ./config:/config #The config file location, Optional if using env variables
