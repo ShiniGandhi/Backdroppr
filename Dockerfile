@@ -6,8 +6,6 @@ COPY requirements.txt requirements.txt
 
 RUN pip install -r requirements.txt
 
-CMD python3 /main.py
-
 ARG RADARR_API=UNSET_VALUE
 ARG RADARR_HOST=UNSET_VALUE
 ARG SONARR_API=UNSET_VALUE
@@ -37,3 +35,5 @@ ENV RADARR_API=${RADARR_API} \
     SUBS=${SUBS} \
     MOVIEPATH=${MOVIEPATH} \
     TVPATH=${TVPATH}
+
+CMD python3 /main.py
