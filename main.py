@@ -87,7 +87,7 @@ def load_env():
         config['moviepath'] = os.environ.get("MOVIEPATH", config['moviepath'])
     if 'tvpath' in config and os.environ['TVPATH'] != 'UNSET_VALUE':
         config['tvpath'] = os.environ.get("TVPATH", config['tvpath'])
-        
+
 
 def dl_progress(d):
     if d['status'] == 'finished':
