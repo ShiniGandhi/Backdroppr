@@ -20,8 +20,6 @@ services:
     ### Uncomment if needed ###
     #   - MOVIEPATH="/vault/Media/Movies"
     #   - TVPATH="/vault/Media/TV Shows"
-    ### Debugging ###
-    #     DEBUG=False
     restart: always
     volumes:
       - ./config:/config #The config file location, Optional if using env variables

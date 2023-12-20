@@ -92,8 +92,6 @@ def load_env():
         config['sleep_time'] = float(config['sleep_time'])
     else:
         config['sleep_time'] = int(config['sleep_time'])
-    if os.environ['DEBUG'] == 'True':
-        print(config)
 
 def dl_progress(d):
     if d['status'] == 'finished':
