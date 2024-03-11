@@ -1,9 +1,27 @@
 version: "3"
 services:
   backdroppr:
+    container_name: backdroppr
     image: shinigandhi/backdroppr:latest
+    ### Optional: Uncomment case-sensitive environment variables to configure backdroppr ###
+    # environment:
+    #   - RADARR_API="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    #   - RADARR_HOST=http://localhost:7878
+    #   - SONARR_API="xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+    #   - SONARR_HOST=http://localhost:8989
+    #   - TMDB_API=""xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx""
+    #   - OUTPUT_DIRS="trailers"
+    #   - SLEEP_TIME=3
+    #   - LENGTH_RANGE="30,300"
+    #   - FILETYPE="webm"
+    #   - SKIP_INTROS=True
+    #   - THREAD_COUNT="8"
+    #   - SUBS=True
+    ### Uncomment if needed ###
+    #   - MOVIEPATH="/vault/Media/Movies"
+    #   - TVPATH="/vault/Media/TV Shows"
     restart: always
     volumes:
-      - ./config:/config #Where the config file will be located
+      - ./config:/config #The config file location, Optional if using env variables
       - /vault/Media/TV Shows:/tv #TV show directory re-routing
       - /vault/Media/Movies:/movies #Movie directory re-routing

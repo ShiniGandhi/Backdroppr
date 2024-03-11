@@ -9,12 +9,106 @@ import yaml
 import yt_dlp
 from pyarr import SonarrAPI, RadarrAPI
 
-
 def load_config():
-    with open('config/config.yaml', 'r') as f:
-        global config
-        config = yaml.load(f, Loader=yaml.Loader)
+    global config
+    try:
+        with open('config/config.yaml', 'r') as f:
+            config = yaml.load(f, Loader=yaml.Loader)
+    except FileNotFoundError as e:
+        # try to load with env variables instead
+        config = {}
+        number_unset = 0
+        number_of_possible_arg = 14
+        for key, value in os.environ.items():
+            if value == "UNSET_VALUE":
+                number_unset = number_unset + 1
+        if number_unset != number_of_possible_arg:
+            if os.environ['RADARR_API'] != 'UNSET_VALUE':
+                config['radarr_api'] = os.environ["RADARR_API"]
+            if os.environ['RADARR_API_FILE'] != 'UNSET_VALUE':
+                try:
+                    with open(os.environ["RADARR_API_FILE"], 'r') as rF:
+                       config['radarr_api'] = rF.read().replace('\n','')
+                except FileNotFoundError as e:
+                    logging.info("ERROR: RADARR_API_FILE location is incorrect!")
+            if os.environ['RADARR_HOST'] != 'UNSET_VALUE':
+                config['radarr_host'] = os.environ["RADARR_HOST"]
+            if os.environ['SONARR_API'] != 'UNSET_VALUE':
+                config['sonarr_api'] = os.environ["SONARR_API"]
+            if os.environ['SONARR_API_FILE'] != 'UNSET_VALUE':
+                try:
+                    with open(os.environ["SONARR_API_FILE"], 'r') as rF:
+                       config['sonarr_api'] = rF.read().replace('\n','')
+                except FileNotFoundError as e:
+                    logging.info("ERROR: SONARR_API_FILE location is incorrect!")
+            if os.environ['SONARR_HOST'] != 'UNSET_VALUE':
+                config['sonarr_host'] = os.environ["SONARR_HOST"]
+            if os.environ['TMDB_API'] != 'UNSET_VALUE':
+                config['tmdb_api'] = os.environ["TMDB_API"]
+            if os.environ['TMDB_API_FILE'] != 'UNSET_VALUE':
+                try:
+                    with open(os.environ["TMDB_API_FILE"], 'r') as rF:
+                       config['tmdb_api'] = rF.read().replace('\n','')
+                except FileNotFoundError as e:
+                    logging.info("ERROR: TMDB_API_FILE location is incorrect!")
+            if os.environ['OUTPUT_DIRS'] != 'UNSET_VALUE':
+                config['output_dirs'] = os.environ["OUTPUT_DIRS"]
+            if os.environ['SLEEP_TIME'] != 'UNSET_VALUE':
+                config['sleep_time'] = os.environ["SLEEP_TIME"]
+            if os.environ['LENGTH_RANGE'] != 'UNSET_VALUE':
+                config['length_range'] = os.environ["LENGTH_RANGE"]
+            if os.environ['FILETYPE'] != 'UNSET_VALUE':
+                config['filetype'] = os.environ["FILETYPE"]
+            if os.environ['SKIP_INTROS'] != 'UNSET_VALUE':
+                config['skip_intros'] = os.environ["SKIP_INTROS"]
+            if os.environ['THREAD_COUNT'] != 'UNSET_VALUE':
+                config['thread_count'] = os.environ["THREAD_COUNT"]
+            if os.environ['SUBS'] != 'UNSET_VALUE':
+                config['subs'] = os.environ["SUBS"]
+            if os.environ['MOVIEPATH'] != 'UNSET_VALUE':
+                config['moviepath'] = os.environ["MOVIEPATH"]
+            if os.environ['TVPATH'] != 'UNSET_VALUE':
+                config['tvpath'] = os.environ["TVPATH"]
+        else:
+            logging.error(f"ERROR: {e}")
 
+
+def load_env():
+    # required fields
+    if 'radarr_api' in config and os.environ['RADARR_API'] != 'UNSET_VALUE':
+        config['radarr_api'] = os.environ.get("RADARR_API", config['radarr_api'])
+    if 'radarr_host' in config and os.environ['RADARR_HOST'] != 'UNSET_VALUE':
+        config['radarr_host'] = os.environ.get("RADARR_HOST", config['radarr_host'])
+    if 'sonarr_api' in config and os.environ['SONARR_API'] != 'UNSET_VALUE':
+        config['sonarr_api'] = os.environ.get("SONARR_API", config['sonarr_api'])
+    if 'sonarr_host' in config and os.environ['SONARR_HOST'] != 'UNSET_VALUE':
+        config['sonarr_host'] = os.environ.get("SONARR_HOST", config['sonarr_host'])
+    if 'tmdb_api' in config and os.environ['TMDB_API'] != 'UNSET_VALUE':
+        config['tmdb_api'] = os.environ.get("TMDB_API", config['tmdb_api'])
+    if 'output_dirs' in config and os.environ['OUTPUT_DIRS'] != 'UNSET_VALUE':
+        config['output_dirs'] = os.environ.get("OUTPUT_DIRS", config['output_dirs'])
+    # optional fields
+    if 'sleep_time' in config and os.environ['SLEEP_TIME'] != 'UNSET_VALUE':
+        config['sleep_time'] = os.environ.get("SLEEP_TIME", config['sleep_time'])
+    if 'length_range' in config and os.environ['LENGTH_RANGE'] != 'UNSET_VALUE':
+        config['length_range'] = os.environ.get("LENGTH_RANGE", config['length_range'])
+    if 'filetype' in config and os.environ['FILETYPE'] != 'UNSET_VALUE':
+        config['filetype'] = os.environ.get("FILETYPE", config['filetype'])
+    if 'skip_intros' in config and os.environ['SKIP_INTROS'] != 'UNSET_VALUE':
+        config['skip_intros'] = os.environ.get("SKIP_INTROS", config['skip_intros'])
+    if 'thread_count' in config and os.environ['THREAD_COUNT'] != 'UNSET_VALUE':
+        config['thread_count'] = os.environ.get("THREAD_COUNT", config['thread_count'])
+    if 'subs' in config and os.environ['SUBS'] != 'UNSET_VALUE':
+        config['subs'] = os.environ.get("SUBS", config['subs'])
+    if 'moviepath' in config and os.environ['MOVIEPATH'] != 'UNSET_VALUE':
+        config['moviepath'] = os.environ.get("MOVIEPATH", config['moviepath'])
+    if 'tvpath' in config and os.environ['TVPATH'] != 'UNSET_VALUE':
+        config['tvpath'] = os.environ.get("TVPATH", config['tvpath'])
+    # transformations
+    if '.' in config['sleep_time']:
+        config['sleep_time'] = float(config['sleep_time'])
+    else:
+        config['sleep_time'] = int(config['sleep_time'])
 
 def dl_progress(d):
     if d['status'] == 'finished':
@@ -104,7 +198,7 @@ def show_finder():
                     show_item['path'] = f"{config['tvpath']}/{show_item['path'][0:-1].split('/')[-1]}"
                 else:
                     show_item['path'] = f"{config['tvpath']}/{show_item['path'].split('/')[-1]}"
-            if show_item['episodeFileCount'] > 0:
+            if show_item['statistics']['episodeFileCount'] > 0:
                 tv_num = tv_num + 1
                 logging.info(
                     f"[{tv_num}] -- Title: {show_item['title']}: Path: {show_item['path']} -- IMDB-ID: "
@@ -113,9 +207,8 @@ def show_finder():
                     logging.info("Trailer exists!")
                 else:
                     try:
-                        show_id = requests.get(
-                            f"https://api.themoviedb.org/3/find/{show_item['imdbId']}?api_key={config['tmdb_api']}"
-                            f"&external_source=imdb_id").json()['tv_results']
+                        show_url = f"https://api.themoviedb.org/3/find/{show_item['imdbId']}?api_key={config['tmdb_api']}&external_source=imdb_id"
+                        show_id = requests.get(show_url).json()['tv_results']
                         if 'id' in show_id[0]:
                             link = trailer_pull(show_id[0]['id'], "tv")
                             if link == 1:
@@ -226,6 +319,7 @@ except:
     logging.debug("Cache directory found.")
 while True:
     load_config()
+    load_env()
     thread_count = config['thread_count'] if 'thread_count' in config else 0
     if all(x in config for x in ['radarr_host', 'radarr_api']):
         radarr = RadarrAPI(config['radarr_host'], config['radarr_api'])
