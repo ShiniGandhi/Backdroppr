@@ -119,3 +119,4 @@ services:
       - /vault/Media/TV Shows:/tv #TV show directory re-routing
       - /vault/Media/Movies:/movies #Movie directory re-routing
 ```
+Note: You may append `_FILE` to the end of the following variables: RADARR_API, SONARR_API, TMDB_API and provide a valid file path.
