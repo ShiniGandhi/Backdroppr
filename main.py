@@ -9,7 +9,6 @@ import yaml
 import yt_dlp
 from pyarr import SonarrAPI, RadarrAPI
 
-
 def load_config():
     global config
     try:
@@ -29,7 +28,7 @@ def load_config():
             if os.environ['RADARR_API_FILE'] != 'UNSET_VALUE':
                 try:
                     with open(os.environ["RADARR_API_FILE"], 'r') as rF:
-                       config['radarr_api'] = rF.read().replace('\n',' ')
+                       config['radarr_api'] = rF.read().replace('\n','')
                 except FileNotFoundError as e:
                     logging.info("ERROR: RADARR_API_FILE location is incorrect!")
             if os.environ['RADARR_HOST'] != 'UNSET_VALUE':
@@ -39,7 +38,7 @@ def load_config():
             if os.environ['SONARR_API_FILE'] != 'UNSET_VALUE':
                 try:
                     with open(os.environ["SONARR_API_FILE"], 'r') as rF:
-                       config['sonarr_api'] = rF.read().replace('\n',' ')
+                       config['sonarr_api'] = rF.read().replace('\n','')
                 except FileNotFoundError as e:
                     logging.info("ERROR: SONARR_API_FILE location is incorrect!")
             if os.environ['SONARR_HOST'] != 'UNSET_VALUE':
@@ -49,7 +48,7 @@ def load_config():
             if os.environ['TMDB_API_FILE'] != 'UNSET_VALUE':
                 try:
                     with open(os.environ["TMDB_API_FILE"], 'r') as rF:
-                       config['tmdb_api'] = rF.read().replace('\n',' ')
+                       config['tmdb_api'] = rF.read().replace('\n','')
                 except FileNotFoundError as e:
                     logging.info("ERROR: TMDB_API_FILE location is incorrect!")
             if os.environ['OUTPUT_DIRS'] != 'UNSET_VALUE':
@@ -199,7 +198,7 @@ def show_finder():
                     show_item['path'] = f"{config['tvpath']}/{show_item['path'][0:-1].split('/')[-1]}"
                 else:
                     show_item['path'] = f"{config['tvpath']}/{show_item['path'].split('/')[-1]}"
-            if show_item['episodeFileCount'] > 0:
+            if show_item['statistics']['episodeFileCount'] > 0:
                 tv_num = tv_num + 1
                 logging.info(
                     f"[{tv_num}] -- Title: {show_item['title']}: Path: {show_item['path']} -- IMDB-ID: "
@@ -208,9 +207,8 @@ def show_finder():
                     logging.info("Trailer exists!")
                 else:
                     try:
-                        show_id = requests.get(
-                            f"https://api.themoviedb.org/3/find/{show_item['imdbId']}?api_key={config['tmdb_api']}"
-                            f"&external_source=imdb_id").json()['tv_results']
+                        show_url = f"https://api.themoviedb.org/3/find/{show_item['imdbId']}?api_key={config['tmdb_api']}&external_source=imdb_id"
+                        show_id = requests.get(show_url).json()['tv_results']
                         if 'id' in show_id[0]:
                             link = trailer_pull(show_id[0]['id'], "tv")
                             if link == 1:
