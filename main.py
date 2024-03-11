@@ -26,14 +26,32 @@ def load_config():
         if number_unset != number_of_possible_arg:
             if os.environ['RADARR_API'] != 'UNSET_VALUE':
                 config['radarr_api'] = os.environ["RADARR_API"]
+            if os.environ['RADARR_API_FILE'] != 'UNSET_VALUE':
+                try:
+                    with open(os.environ["RADARR_API_FILE"], 'r') as rF:
+                       config['radarr_api'] = rF
+                except FileNotFoundError as e:
+                    logging.info("ERROR: RADARR_API_FILE location is incorrect!")
             if os.environ['RADARR_HOST'] != 'UNSET_VALUE':
                 config['radarr_host'] = os.environ["RADARR_HOST"]
             if os.environ['SONARR_API'] != 'UNSET_VALUE':
                 config['sonarr_api'] = os.environ["SONARR_API"]
+            if os.environ['SONARR_API_FILE'] != 'UNSET_VALUE':
+                try:
+                    with open(os.environ["SONARR_API_FILE"], 'r') as rF:
+                       config['sonarr_api'] = rF
+                except FileNotFoundError as e:
+                    logging.info("ERROR: SONARR_API_FILE location is incorrect!")
             if os.environ['SONARR_HOST'] != 'UNSET_VALUE':
                 config['sonarr_host'] = os.environ["SONARR_HOST"]
             if os.environ['TMDB_API'] != 'UNSET_VALUE':
                 config['tmdb_api'] = os.environ["TMDB_API"]
+            if os.environ['TMDB_API_FILE'] != 'UNSET_VALUE':
+                try:
+                    with open(os.environ["TMDB_API_FILE"], 'r') as rF:
+                       config['tmdb_api'] = rF
+                except FileNotFoundError as e:
+                    logging.info("ERROR: TMDB_API_FILE location is incorrect!")
             if os.environ['OUTPUT_DIRS'] != 'UNSET_VALUE':
                 config['output_dirs'] = os.environ["OUTPUT_DIRS"]
             if os.environ['SLEEP_TIME'] != 'UNSET_VALUE':
